@@ -1,0 +1,7 @@
+
+/* Osnovni stilovi */
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif; }
+.hero { min-height: 60vh; background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.55)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; }
+.card-title { font-weight: 600; }
+footer { font-size: .95rem; }
+a { text-decoration: none; }
