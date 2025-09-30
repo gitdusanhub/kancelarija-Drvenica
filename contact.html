@@ -21,7 +21,7 @@
             <li class="nav-item"><a class="nav-link" href="index.html">Početna</a></li>
             <li class="nav-item"><a class="nav-link" href="about.html">O nama</a></li>
             <li class="nav-item"><a class="nav-link" href="services.html">Usluge</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link active" href="contact.html">Kontakt</a></li>
           </ul>
         </div>
       </div>
@@ -32,30 +32,43 @@
         <div class="col-lg-6">
           <h1 class="h3 fw-bold">Kontakt</h1>
           <p>Popunite formular ili nas kontaktirajte telefonom/e-mailom. Odgovaramo u roku od 1 radnog dana.</p>
-          <form class="needs-validation" novalidate action="mailto:milicadrvenica@yahoo.com" method="post" enctype="text/plain">
+
+          <!-- NOVA FORMA -->
+          <form id="contactForm" class="needs-validation" novalidate
+                action="https://formspree.io/f/xvgwabbo" method="POST">
             <div class="mb-3">
               <label for="name" class="form-label">Ime i prezime</label>
-              <input type="text" class="form-control" id="name" name="Ime" required>
+              <input type="text" class="form-control" id="name" name="name" required>
               <div class="invalid-feedback">Unesite ime i prezime.</div>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">E-mail</label>
-              <input type="email" class="form-control" id="email" name="Email" required>
+              <input type="email" class="form-control" id="email" name="email" required>
               <div class="invalid-feedback">Unesite ispravan e-mail.</div>
             </div>
             <div class="mb-3">
+              <label for="phone" class="form-label">Telefon (opciono)</label>
+              <input type="tel" class="form-control" id="phone" name="phone" inputmode="tel">
+            </div>
+            <div class="mb-3">
               <label for="message" class="form-label">Poruka</label>
-              <textarea class="form-control" id="message" name="Poruka" rows="4" required></textarea>
+              <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
               <div class="invalid-feedback">Unesite poruku.</div>
             </div>
-            <button type="submit" class="btn btn-primary">Pošalji</button>
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="d-none">
+            <input type="hidden" name="_subject" value="Upit sa sajta – Advokatska kancelarija Drvenica">
+
+            <button id="submitBtn" type="submit" class="btn btn-primary">Pošalji</button>
+            <div id="formAlert" class="alert mt-3 d-none" role="alert"></div>
           </form>
+
           <div class="mt-4">
             <p class="mb-1"><strong>Telefon:</strong> +381 64 69 769 93</p>
             <p class="mb-1"><strong>E-mail:</strong> milicadrvenica@yahoo.com</p>
             <p class="mb-0"><strong>Adresa:</strong> Deli-Radivoja 31, Beograd</p>
           </div>
         </div>
+
         <div class="col-lg-6">
           <div class="ratio ratio-16x9 rounded-3 shadow-sm overflow-hidden">
             <iframe src="https://maps.google.com/maps?q=Deli%20Radivoja%2031,%20Beograd&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy"></iframe>
