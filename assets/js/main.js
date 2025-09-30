@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-// ---- Back to top (podešeno za kratke stranice) ----
+// ---- Back to top (uvek vidljivo na kratkim stranicama) ----
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.createElement('button');
-  btn.className = 'btn btn-primary shadow back-to-top';
+  btn.className = 'btn btn-primary shadow back-to-top show'; // odmah show
   btn.type = 'button';
   btn.setAttribute('aria-label', 'Nazad na vrh');
   btn.innerHTML = `
@@ -72,28 +72,21 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.body.appendChild(btn);
 
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const smoothScrollTop = () => {
-    if (prefersReduced) window.scrollTo(0, 0);
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  btn.addEventListener('click', smoothScrollTop);
+  // Smooth scroll na vrh
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
-  // Ako je stranica kratka, prikaži dugme odmah; inače posle 100px skrola
+  // Ako stranica ima skrol, dugme se prikazuje tek posle 100px
   const toggleBtn = () => {
-    const doc = document.documentElement;
-    const canScroll = (doc.scrollHeight - window.innerHeight) > 0;
-    const shouldShow = canScroll ? (window.scrollY > 100) : true;
-    btn.classList.toggle('show', shouldShow);
+    const canScroll = document.documentElement.scrollHeight > window.innerHeight;
+    if (canScroll) {
+      btn.classList.toggle('show', window.scrollY > 100);
+    } else {
+      btn.classList.add('show'); // uvek prikazano na kratkim stranicama
+    }
   };
 
-  // Inicijalno stanje + praćenje skrola
-  toggleBtn();
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => { toggleBtn(); ticking = false; });
-      ticking = true;
-    }
-  }, { passive: true });
+  toggleBtn(); // inicijalno
+  window.addEventListener('scroll', toggleBtn, { passive: true });
 });
