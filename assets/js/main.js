@@ -58,9 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-// ---- Back to top ----
+// ---- Back to top (podešeno za kratke stranice) ----
 document.addEventListener('DOMContentLoaded', () => {
-  // Napravi dugme (Bootstrap stilovi + naša klasa)
   const btn = document.createElement('button');
   btn.className = 'btn btn-primary shadow back-to-top';
   btn.type = 'button';
@@ -73,31 +72,28 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.body.appendChild(btn);
 
-  // Smooth scroll (poštuje reduced motion)
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const smoothScrollTop = () => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      window.scrollTo(0, 0);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    if (prefersReduced) window.scrollTo(0, 0);
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   btn.addEventListener('click', smoothScrollTop);
 
-  // Prikaz/skrivanje pri skrolu (blago optimizovano)
-  let ticking = false;
+  // Ako je stranica kratka, prikaži dugme odmah; inače posle 100px skrola
   const toggleBtn = () => {
-    const show = window.scrollY > 300;
-    btn.classList.toggle('show', show);
-    ticking = false;
+    const doc = document.documentElement;
+    const canScroll = (doc.scrollHeight - window.innerHeight) > 0;
+    const shouldShow = canScroll ? (window.scrollY > 100) : true;
+    btn.classList.toggle('show', shouldShow);
   };
+
+  // Inicijalno stanje + praćenje skrola
+  toggleBtn();
+  let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
-      window.requestAnimationFrame(toggleBtn);
+      window.requestAnimationFrame(() => { toggleBtn(); ticking = false; });
       ticking = true;
     }
   }, { passive: true });
-
-  // Ako se učita već skrolovano (npr. hash link)
-  toggleBtn();
 });
